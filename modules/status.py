@@ -3,7 +3,7 @@ import urllib
 
 def query_api(mode='viewstatus'):
     url = "https://devlol.org/status/hackerspaceapi/"
-    return urllib.urlopen(url + mode)
+    return urllib.urlopen(url + mode).read()
 
 @willie.module.commands('status')
 def status(bot, trigger):
@@ -15,7 +15,7 @@ def status(bot, trigger):
     else:
         mode = 'viewstatus'
     status = query_api(mode)
-    bot.say(status.read())
+    bot.say(status)
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):

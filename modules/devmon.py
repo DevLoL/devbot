@@ -4,6 +4,7 @@ import status
 
 alert = True
 
+#print info of devmon: Bandwith usage of last 24h, and lease information
 @willie.module.commands('devmon')
 def devmon(bot, trigger):
     url = "https://devlol.org/devmon/data/day.tsv"
@@ -35,21 +36,37 @@ def devmon(bot, trigger):
 
 def get_leases():
     url = "https://devlol.org/devmon/now.php"
-    return int(urllib.urlopen(url))
+    return int(urllib.urlopen(url).read())
 
-
-@willie.module.interval(5*60)
+#periodically check if status and devmon fit each other
+@willie.module.interval(15*60)
 def check_status(bot):
+    global alert
     if alert:
-        status = status.query_api()
-        activity = get_leases()
-        if ('OPEN' in status) and (activity == 0):
+        state = status.query_api()
+        leases = get_leases()
+        if ('OPEN' in state) and (leases == 0):
             bot.msg('#devlol', 'Warnung: Der Status ist \'OPEN\' aber vermutlich keiner da!')
+            bot.msg('#devlol', '\'.status close\' oder \'.alert off\'')
 
+
+#this command lets you manually turn off the status alert
 @willie.module.commands('alert')
 def alert(bot, trigger):
+    global alert
     cmd = trigger.group(2)
     if cmd == 'on':
         alert = True
     elif cmd == 'off':
         alert = False
+
+    if alert:
+        bot.say('alert is on')
+    else:
+        bot.say('alert is off')
+
+
+#because we tend to forget toggles, alert resets every hour
+@willie.module.interval(60*60)
+def reset_alert(bot):
+    alert = True
