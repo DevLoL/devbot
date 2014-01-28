@@ -69,4 +69,5 @@ def alert(bot, trigger):
 #because we tend to forget toggles, alert resets every hour
 @willie.module.interval(60*60)
 def reset_alert(bot):
+    global alert
     alert = True
