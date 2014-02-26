@@ -46,8 +46,8 @@ def check_status(bot):
         state = status.query_api()
         leases = get_leases()
         if ('OPEN' in state) and (leases == 0):
-            bot.msg('#devlol', 'Warnung: Der Status ist \'OPEN\' aber vermutlich keiner da!')
-            bot.msg('#devlol', '\'.status close\' oder \'.alert off\'')
+            bot.msg('#devlol', 'Warning: status is set to \'OPEN\', but no activity detected!')
+            bot.msg('#devlol', '\'.status close\' or \'.alert off\'')
 
 
 #this command lets you manually turn off the status alert
