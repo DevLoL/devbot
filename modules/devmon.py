@@ -34,13 +34,15 @@ def devmon(bot, trigger):
     dump = 'Total Bandwitdh Usage in last 24h: download: %.2fMB, upload: %.2fMB, Peak of active Devices: %d, %s' %(rx, tx, peak, people)
     bot.reply(dump)
 
+
 def get_leases():
     url = "https://devlol.org/devmon/now.php"
     return int(urllib.urlopen(url).read())
 
+
 #periodically check if status and devmon fit each other
 @willie.module.interval(15*60)
-def check_status(bot):
+def check_status_match(bot):
     global alert
     if alert:
         state = status.query_api()
