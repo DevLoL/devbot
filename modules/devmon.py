@@ -31,7 +31,7 @@ def devmon(bot, trigger):
         people = '%d Devices active now' %lease
     else:
         people = 'No activity since: %s' %last_date
-    dump = 'Total Bandwith Usage in last 24h: download: %.2fMB, upload: %.2fMB, Peak of active Devices: %d, %s' %(rx, tx, peak, people)
+    dump = 'Total Bandwitdh Usage in last 24h: download: %.2fMB, upload: %.2fMB, Peak of active Devices: %d, %s' %(rx, tx, peak, people)
     bot.reply(dump)
 
 def get_leases():
