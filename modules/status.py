@@ -1,7 +1,7 @@
 import willie
 import urllib
 
-laststate = ''
+laststate = True
 
 def query_api(mode='viewstatus'):
     url = "https://devlol.org/status/hackerspaceapi/"
@@ -18,7 +18,7 @@ def status(bot, trigger):
     else:
         mode = 'viewstatus'
     status = query_api(mode)
-    laststate = status
+    laststate = 'OPEN' in status
     bot.say(status)
 
 @willie.module.commands('isitChristmas')
@@ -28,10 +28,13 @@ def christmas(bot, trigger):
 @willie.module.interval(60)
 def check_status(bot):
     global laststate
-    state = query_api()
-    if state is not laststate:
+    state = 'OPEN' in query_api()
+    if laststate is not state:
         laststate = state
-        if 'OPEN' in state:
+        if state:
             bot.msg('#devlol', 'the space is now OPEN')
         else:
             bot.msg('#devlol', 'the space is now CLOSED')
+
+#init state on startup
+laststate = 'OPEN' in query_api()

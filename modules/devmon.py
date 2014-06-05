@@ -4,7 +4,7 @@ import status
 
 alert = True
 
-#print info of devmon: Bandwith usage of last 24h, and lease information
+#print info of devmon: Bandwidth usage of last 24h, and lease information
 @willie.module.commands('devmon')
 def devmon(bot, trigger):
     url = "https://devlol.org/devmon/data/day.tsv"
@@ -31,7 +31,7 @@ def devmon(bot, trigger):
         people = '%d Devices active now' %lease
     else:
         people = 'No activity since: %s' %last_date
-    dump = 'Total Bandwitdh Usage in last 24h: download: %.2fMB, upload: %.2fMB, Peak of active Devices: %d, %s' %(rx, tx, peak, people)
+    dump = 'Total Bandwidth Usage in last 24h: download: %.2fMB, upload: %.2fMB, Peak of active Devices: %d, %s' %(rx, tx, peak, people)
     bot.reply(dump)
 
 
