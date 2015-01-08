@@ -1,5 +1,6 @@
 import willie
 import urllib
+import datetime
 
 laststate = True
 
@@ -23,7 +24,11 @@ def status(bot, trigger):
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
-    bot.say('NO')
+    days_to_go = (datetime.date(datetime.date.today().year, 12, 24) - datetime.date.today()).days
+    if days_to_go == 0:
+        boy.say("Happy Birthday Brian")
+    else:
+        bot.say("No. But it's only %i days to go" % days_to_go)
 
 @willie.module.interval(60)
 def check_status(bot):
