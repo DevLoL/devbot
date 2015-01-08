@@ -39,8 +39,11 @@ commands = {
 def help(bot, trigger):
     cmd = trigger.group(2)
     if cmd:
-        bot.say('.' + commands[cmd]['synopsis'])
-        bot.say(commands[cmd]['description'])
+        if cmd in commands.keys():
+            bot.say('.' + commands[cmd]['synopsis'])
+            bot.say(commands[cmd]['description'])
+        else:
+            bot.say("command not found!")
     else:
         bot.say("=== /dev/bot manual ===")
         for k, v in sorted(commands.iteritems()):
