@@ -11,10 +11,10 @@ def query_api(mode='viewstatus'):
 @willie.module.commands('status')
 def status(bot, trigger):
     global laststate
-    cmd = trigger.group(2)
+    cmd = trigger.group(2).lower()
     if cmd == 'open':
         mode = 'set/open'
-    elif cmd == 'close':
+    elif cmd == 'close' or cmd == 'closed':
         mode = 'set/close'
     else:
         mode = 'viewstatus'
