@@ -3,14 +3,22 @@ import urllib
 import datetime
 
 laststate = True
+fucking = False
 
 def query_api(mode='viewstatus'):
     url = "https://devlol.org/status/hackerspaceapi/"
     return urllib.urlopen(url + mode).read()
 
+@willie.module.commands('fuckingstatus')
+def fuckingstatus(bot, trigger):
+    global fucking
+    fucking = True
+    status(bot, trigger)
+
 @willie.module.commands('status')
 def status(bot, trigger):
     global laststate
+    global fucking
     cmd = trigger.group(2)
     if cmd != None:
         cmd = cmd.lower()
@@ -22,7 +30,10 @@ def status(bot, trigger):
         mode = 'viewstatus'
     status = query_api(mode)
     laststate = 'OPEN' in status
+    if fucking:
+        status = status.replace('is', 'is fucking').replace('since', 'since fucking')
     bot.say(status)
+    fucking = False
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
