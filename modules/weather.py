@@ -50,7 +50,7 @@ def weather(bot, trigger):
     bot.reply(today.summary)
 
 @willie.module.commands('fuckingweather')
-def weather(bot, trigger):
+def fuckingweather(bot, trigger):
     forecast = forecastio.load_forecast(API_KEY, lat, lng)
     now = forecast.currently()
     if now.icon in responses:
@@ -62,10 +62,15 @@ def weather(bot, trigger):
 def temp(bot, trigger):
     forecast = forecastio.load_forecast(API_KEY, lat, lng)
     now = forecast.currently()
-    dump = "Mainroom: %.2f°C, Dungeon: %.2f°C, Outside: %.2f°C" %(mainroom["temp"],
-            dungeon["temp"], now.temperature)
+    dump = "Mainroom: %.2f°C, Dungeon: %.2f°C, Outside: %.2f°C" %(mainroom["temp"], dungeon["temp"], now.temperature)
     bot.reply(dump)
 
+@willie.module.commands('humidity')
+def humiditiy(bot, trigger):
+    forecast = forecastio.load_forecast(API_KEY, lat, lng)
+    now = forecast.currently()
+    dump = "Mainroom: %.2f, Dungeon: %.2f, Outside: %.2f" %(mainroom["hum"], dungeon["hum"], now.humidity*100)
+    bot.reply(dump)
 
 @willie.module.interval(1)
 def mqtt_update(bot):
