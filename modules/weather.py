@@ -24,7 +24,7 @@ responses = {
     "partly-cloudy-night": "Fucking dark with clouds.",
 }
 
-def on_message(client, data, msg):
+def on_message(client, bot, msg):
     try:
         if(msg.topic == "devlol/h19/dungeon/DHT21/temp"):
             dungeon["temp"] = float(msg.payload.replace('\t', ''))
@@ -37,6 +37,8 @@ def on_message(client, data, msg):
     except:
         print "Invalid Messages injected!"
         pass
+    if((msg.topic == "devlol/h19/mainroom/craftui/button/buttonHi5") and (msg.payload == "DOWN")):
+        bot.msg('#devlol', 'Hi5!')
 
 client = mosquitto.Mosquitto()
 client.connect("test.mosquitto.org")
@@ -75,4 +77,9 @@ def humiditiy(bot, trigger):
 @willie.module.interval(1)
 def mqtt_update(bot):
     global client
+    if mqtt_update.init_userdata:
+        mqtt_update.init_userdata = False
+        client.user_data_set(bot)
     client.loop()
+mqtt_update.init_userdata = True
+
