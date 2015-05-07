@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import urllib
 import willie
 import forecastio
 import mosquitto
@@ -24,6 +25,9 @@ responses = {
     "partly-cloudy-night": "Fucking dark with clouds.",
 }
 
+def metafridge(bot, msg):
+    urllib.urlopen("http://metafridge.metalab.at/cgi-bin/post_text.cgi?killmockingbird=0&effect=0&scroll_text=" + msg)
+
 def on_message(client, bot, msg):
     try:
         if(msg.topic == "devlol/h19/dungeon/DHT21/temp"):
@@ -34,11 +38,15 @@ def on_message(client, bot, msg):
             mainroom["temp"] = float(msg.payload)
         if(msg.topic == "devlol/h19/mainroom/DHT21/hum"):
             mainroom["hum"] = float(msg.payload)
-    except:
-        print "Invalid Messages injected!"
+        if((msg.topic == "devlol/h19/mainroom/craftui/button/buttonHi5") and (msg.payload == "DOWN")):
+            bot.msg('#devlol', 'Hi5!')
+            metafridge(bot, "Hi5! Hi5! Hi5!")
+        if((msg.topic == "devlol/h19/mainroom/craftui/button/button_black") and (msg.payload == "DOWN")):
+            metafridge(bot, "Gruesze aus Linz!")
+    except Exception, e:
+        print e
+        print "Error in MQTT Message."
         pass
-    if((msg.topic == "devlol/h19/mainroom/craftui/button/buttonHi5") and (msg.payload == "DOWN")):
-        bot.msg('#devlol', 'Hi5!')
 
 client = mosquitto.Mosquitto()
 client.connect("test.mosquitto.org")
@@ -83,3 +91,10 @@ def mqtt_update(bot):
     client.loop()
 mqtt_update.init_userdata = True
 
+@willie.module.commands('metafridge')
+def metatrigger(bot, trigger):
+    if(trigger.group(2) is not None):
+        metafridge(bot, trigger.group(2))
+        bot.say("Posted to Metafridge!")
+    else:
+        bot.reply("Add a Message.")

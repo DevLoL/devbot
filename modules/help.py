@@ -25,14 +25,24 @@ commands = {
     },
     'temp': {
         'synopsis': 'temp',
-        'description': 'Prints current temperature and how it feels like.',
+        'description': 'Prints current Temperature of various sensors',
         'alias': ['t'],
+    },
+    'humidity': {
+        'synopsis': 'humidity',
+        'description': 'Prints current Humidity of various sensors',
+        'alias': ['h'],
     },
     'weather': {
         'synopsis': 'weather',
         'description': 'Prints a human-readable summary of the hourly weather-data provided by forecast.io for Linz.',
         'alias': ['w'],
     },
+    'fuckingstatus': {
+        'synopsis': 'fuckingstatus',
+        'description': 'Just a fucking alias.',
+        'alias': ['fw'],
+    }
 }
 
 @willie.module.commands('h', 'help', 'man')
