@@ -33,15 +33,17 @@ def status(bot, trigger):
     if fucking:
         status = status.replace('is', 'is fucking').replace('since', 'since fucking')
     bot.say(status)
+    # trigger the topic broadcast
+    bot.write(('TOPIC', '#devlol'))
     fucking = False
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
     days_to_go = (datetime.date(datetime.date.today().year, 12, 24) - datetime.date.today()).days
     if days_to_go == 0:
-        boy.say("Happy Birthday Brian")
+        boy.say("Happy Birthday Brian!")
     else:
-        bot.say("No. But it's only %i days to go" % days_to_go)
+        bot.say("No. But it's only %i days to go." % days_to_go)
 
 @willie.module.interval(60)
 def check_status(bot):
@@ -53,6 +55,22 @@ def check_status(bot):
             bot.msg('#devlol', 'the space is now OPEN')
         else:
             bot.msg('#devlol', 'the space is now CLOSED')
+
+@willie.module.rule('.*')
+@willie.module.event('332')
+def topic_set(bot, trigger):
+    s = query_api()
+    if 'OPEN' in s:
+        prefix = '[OPEN]'
+    else:
+        prefix = '[CLOSED]'
+    if not trigger.startswith(prefix):
+        bot.write(('TOPIC', '#devlol'), prefix + " " + trigger.strip('[OPEN]').strip('[CLOSED]'))
+
+@willie.module.rule('.*')
+@willie.module.event('TOPIC')
+def topic_trigger(bot, trigger):
+    bot.write(('TOPIC', '#devlol'))
 
 #init state on startup
 laststate = 'OPEN' in query_api()
