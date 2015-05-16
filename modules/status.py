@@ -1,6 +1,7 @@
 import willie
 import urllib
 import datetime
+import json
 
 laststate = True
 fucking = False
@@ -8,6 +9,14 @@ fucking = False
 def query_api(mode='viewstatus'):
     url = "https://devlol.org/status/hackerspaceapi/"
     return urllib.urlopen(url + mode).read()
+
+def isLocked():
+    data = json.loads(query_api(mode=''))
+    b = data['sensors']['door_locked'][0]['value']
+    return b
+
+def isOpen():
+    return not isLocked()
 
 @willie.module.commands('fuckingstatus')
 def fuckingstatus(bot, trigger):
@@ -48,8 +57,10 @@ def christmas(bot, trigger):
 @willie.module.interval(60)
 def check_status(bot):
     global laststate
-    state = 'OPEN' in query_api()
+    state = isOpen()
     if laststate is not state:
+        # trigger the topic broadcast
+        bot.write(('TOPIC', '#devlol'))
         laststate = state
         if state:
             bot.msg('#devlol', 'the space is now OPEN')
@@ -59,18 +70,25 @@ def check_status(bot):
 @willie.module.rule('.*')
 @willie.module.event('332')
 def topic_set(bot, trigger):
-    s = query_api()
-    if 'OPEN' in s:
+    if isOpen():
         prefix = '[OPEN]'
     else:
         prefix = '[CLOSED]'
     if not trigger.startswith(prefix):
-        bot.write(('TOPIC', '#devlol'), prefix + " " + trigger.strip('[OPEN]').strip('[CLOSED]'))
+        bot.write(('TOPIC', '#devlol'), prefix + " " + trigger.strip('[OPEN]').strip('[CLOSED]').strip(" "))
 
 @willie.module.rule('.*')
 @willie.module.event('TOPIC')
 def topic_trigger(bot, trigger):
     bot.write(('TOPIC', '#devlol'))
 
+@willie.module.commands('door')
+def door(bot, trigger):
+    bot.write(('TOPIC', '#devlol'))
+    if isLocked():
+        bot.reply("The door is locked!")
+    else:
+        bot.reply("The door is unlocked!")
+
 #init state on startup
-laststate = 'OPEN' in query_api()
+laststate = isOpen()
