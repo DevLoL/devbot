@@ -9,8 +9,8 @@ commands = {
         'alias': ['h', 'man'],
     },
     'status': {
-        'synopsis': 'status [ open | close ]',
-        'description': 'Replies the current Status of the Hackerspace-API or sets it to the provided State either open or closed',
+        'synopsis': 'status',
+        'description': 'legacy command',
         'alias': ['s']
     },
     'devmon': {
