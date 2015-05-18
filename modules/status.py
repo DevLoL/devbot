@@ -4,7 +4,6 @@ import datetime
 import json
 
 laststate = True
-fucking = False
 
 def query_api(mode='viewstatus'):
     url = "https://devlol.org/status/hackerspaceapi/"
@@ -20,31 +19,11 @@ def isOpen():
 
 @willie.module.commands('fuckingstatus')
 def fuckingstatus(bot, trigger):
-    global fucking
-    fucking = True
-    status(bot, trigger)
+    bot.reply("go fuck yourself")
 
 @willie.module.commands('status')
 def status(bot, trigger):
-    global laststate
-    global fucking
-    cmd = trigger.group(2)
-    if cmd != None:
-        cmd = cmd.lower()
-    if cmd == 'open':
-        mode = 'set/open'
-    elif cmd == 'close' or cmd == 'closed':
-        mode = 'set/close'
-    else:
-        mode = 'viewstatus'
-    status = query_api(mode)
-    laststate = 'OPEN' in status
-    if fucking:
-        status = status.replace('is', 'is fucking').replace('since', 'since fucking')
-    bot.say(status)
-    # trigger the topic broadcast
-    bot.write(('TOPIC', '#devlol'))
-    fucking = False
+    bot.reply("go **** yourself")
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
