@@ -19,11 +19,11 @@ def isOpen():
 
 @willie.module.commands('fuckingstatus')
 def fuckingstatus(bot, trigger):
-    bot.reply("go fuck yourself")
+    bot.reply("legacy command: please read the topic")
 
 @willie.module.commands('status')
 def status(bot, trigger):
-    bot.reply("go **** yourself")
+    bot.reply("read the fucking topic")
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
@@ -53,8 +53,8 @@ def topic_set(bot, trigger):
         prefix = '[OPEN]'
     else:
         prefix = '[CLOSED]'
-    if not trigger.startswith(prefix):
-        bot.write(('TOPIC', '#devlol'), prefix + " " + trigger.strip('[OPEN]').strip('[CLOSED]').strip(" "))
+    if not trigger.startswith(prefix) or trigger.count(prefix) > 1:
+        bot.write(('TOPIC', '#devlol'), prefix + " " + trigger.replace('[OPEN]', '').replace('[CLOSED]', '').strip(" "))
 
 @willie.module.rule('.*')
 @willie.module.event('TOPIC')
