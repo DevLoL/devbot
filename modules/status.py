@@ -18,12 +18,12 @@ def isOpen():
     return not isLocked()
 
 @willie.module.commands('fuckingstatus')
-def status(bot, trigger):
-    bot.reply("legacy command: please read the topic")
-
-@willie.module.commands('status')
 def fuckingstatus(bot, trigger):
     bot.reply("read the fucking topic")
+
+@willie.module.commands('status')
+def status(bot, trigger):
+    bot.reply("legacy command: please read the topic")
 
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
