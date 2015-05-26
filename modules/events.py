@@ -9,4 +9,4 @@ def events(bot, trigger):
     data = json.loads(dump)
     bot.reply("upcoming events:")
     for e in data['events']:
-        bot.say(e['date'] + " " + e['time'] + ", " + e['title'] + " - " + e['subtitle'])
+        bot.say(e['start_date'] + " " + e['start_time'] + ", " + e['title'] + " - " + e['subtitle'])
