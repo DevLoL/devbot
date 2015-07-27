@@ -76,7 +76,7 @@ def temp(bot, trigger):
     bot.reply(dump)
 
 @willie.module.commands('humidity')
-def humiditiy(bot, trigger):
+def humidity(bot, trigger):
     forecast = forecastio.load_forecast(API_KEY, lat, lng)
     now = forecast.currently()
     dump = "Mainroom: %.2f, Dungeon: %.2f, Outside: %.2f" %(mainroom["hum"], dungeon["hum"], now.humidity*100)

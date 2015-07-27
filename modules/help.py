@@ -8,11 +8,6 @@ commands = {
         'description': 'Prints this manual.',
         'alias': ['h', 'man'],
     },
-    'status': {
-        'synopsis': 'status',
-        'description': 'legacy command',
-        'alias': ['s']
-    },
     'devmon': {
         'synopsis': 'devmon',
         'description': 'Replies statistics of collected meta-data about our network-infrastructure.',
@@ -38,11 +33,6 @@ commands = {
         'description': 'Prints a human-readable summary of the hourly weather-data provided by forecast.io for Linz.',
         'alias': ['w'],
     },
-    'fuckingstatus': {
-        'synopsis': 'fuckingstatus',
-        'description': 'Just a fucking alias.',
-        'alias': ['fw'],
-    }
 }
 
 @willie.module.commands('h', 'help', 'man')

@@ -17,14 +17,6 @@ def isLocked():
 def isOpen():
     return not isLocked()
 
-@willie.module.commands('fuckingstatus')
-def fuckingstatus(bot, trigger):
-    bot.reply("read the fucking topic")
-
-@willie.module.commands('status')
-def status(bot, trigger):
-    bot.reply("legacy command: please read the topic")
-
 @willie.module.commands('isitChristmas')
 def christmas(bot, trigger):
     days_to_go = (datetime.date(datetime.date.today().year, 12, 24) - datetime.date.today()).days
