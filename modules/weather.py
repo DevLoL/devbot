@@ -49,7 +49,7 @@ def on_message(client, bot, msg):
         pass
 
 client = mosquitto.Mosquitto()
-client.connect("test.mosquitto.org")
+client.connect("mqtt.devlol.org")
 client.on_message = on_message
 client.subscribe("devlol/#")
 
